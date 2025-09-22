@@ -21,6 +21,7 @@ We've collated a list of all the events in Australia that might be of interest t
 | [apidays](https://www.apidays.global/events/australia) | Melbourne | 29-Oct-2025 | 30-Oct-2025 | | | APIs |
 | [Web Directions Developer Summit](https://webdirections.org/dev-summit/index.php) | Sydney | 19-Nov-2025 | 20-Nov-2025 | | | Web |
 | [LAST Conference](https://clubhouse.lastconference.com/lastmel25/) | Melbourne | 21-Nov-2025 | | | | Various |
+| [DevOpsDays](https://devopsdays.org/events/2025-wollongong/welcome/) | Wollongong | 27-Nov-2025 | 28-Nov-2025 | | | Various |
 | [YOW! Melbourne](https://yowcon.com/melbourne-2025) | Melbourne | 4-Dec-2025 | 5-Dec-2025 | | | Various |
 | [YOW! Brisbane](https://yowcon.com/brisbane-2025) | Brisbane | 8-Dec-2025 | 9-Dec-2025 | | | Various |
 | [YOW! Sydney](https://yowcon.com/sydney-2025) | Sydney | 11-Dec-2025 | 12-Dec-2025 | | | Various |
