@@ -26,6 +26,8 @@ We've collated a list of all the events in Australia that might be of interest t
 | [YOW! Brisbane](https://yowcon.com/brisbane-2025) | Brisbane | 8-Dec-2025 | 9-Dec-2025 | | | Various |
 | [YOW! Sydney](https://yowcon.com/sydney-2025) | Sydney | 11-Dec-2025 | 12-Dec-2025 | | | Various |
 | [DDD Melbourne 2026](https://www.dddmelbourne.com/) | Melbourne | 21-Feb-2026 | | | 30-Sep-2025 | Various |
+| [Programmable Melbourne 2026](https://www.programmable.tech/) | Melbourne | 17-Mar-2026 | | | 2-Dec-2025 | Various |
+| [Programmable Sydney 2026](https://www.programmable.tech/) | Sydney | 19-Mar-2026 | | | 2-Dec-2025 | Various |
 
 #### Please note:
 - RubyConf, Serverless Days, and GopherCon are not running in 2025.
