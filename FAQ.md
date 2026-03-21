@@ -26,10 +26,6 @@ This resource is only as good as people's contributions so we want to make it as
 
 Please [sign up on github](https://github.com/join) and follow the easy steps in the [**Contribution Guide**](CONTRIBUTING.md). You can also add an issue by clicking on the issue tab and we will get to it when we can.
 
-### What is Readify's involvement
-
-[Readify](https://readify.net) is an Australian IT Consultancy and this repository is hosted under the Readify organization. Readify team members merge PR requests. All events related to developers are welcome including those of our competitors.
-
 ### What is the license for this project
 
-This repository is licensed under [**Creative Commons - CC0**](../LICENSE.md).
+This repository is licensed under [**Creative Commons - CC0**](LICENSE.md).

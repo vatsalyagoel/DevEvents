@@ -17,7 +17,7 @@
 | [Melbourne MLOps Community](https://www.meetup.com/melbourne-mlops-community1/) | 452 Flinders St, Melbourne | Mantel Group | Bi-Monthly | MLOps |
 | [React Melbourne](https://www.meetup.com/React-Melbourne) | 139 Gladstone St, South Melbourne | Kogan | Quarterly | React |
 | [Ruby Melbourne](https://www.meetup.com/Ruby-On-Rails-Oceania-Melbourne/) | Boyd Community Hub, 207 City Rd, Southbank | Assembly Four, CultureAmp, HotDoc, Gleam.io | Monthly | Ruby |
-| [Tech Leading Ladies](https://www.meetup.com/Tech-Leading-Ladies/) | 550 Bourke St, Melbourne | Zendesk | Monthly | Women in Tech Leadership
+| [Tech Leading Ladies](https://www.meetup.com/Tech-Leading-Ladies/) | 550 Bourke St, Melbourne | Zendesk | Monthly | Women in Tech Leadership |
 | [VIC.NET](https://www.meetup.com/VIC-NET-Meetup/) | 5/4 Freshwater Place, Southbank | Microsoft | Bi-Monthly | .NET |
 | [Women Coders](https://www.meetup.com/women-coders/) | Various | Various | Monthly | Technical Women |
 | [Women in Cloud](https://www.meetup.com/women-in-cloud-meetup-group/) | Various | Various | Monthly | Women in Cloud Computing |
