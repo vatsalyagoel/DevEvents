@@ -1,0 +1,51 @@
+---
+import Base from '@layouts/Base.astro';
+---
+
+<Base
+  title="About"
+  description="About DevEvents — a community-maintained list of Australian developer events."
+>
+  <div class="container">
+    <div class="page-header">
+      <h1>About DevEvents</h1>
+    </div>
+    <div class="page-content" style="max-width:680px;">
+      <p>
+        DevEvents is a community-maintained, open-source list of Australian developer events — conferences, workshops, and meetups of interest to software developers.
+      </p>
+      <p>
+        The data lives in plain Markdown files on GitHub. Anyone can contribute by opening a pull request, or even editing a file directly in the browser without any git knowledge.
+      </p>
+
+      <h2 style="font-size:1.2rem; margin-top:2rem;">What gets listed?</h2>
+      <ul>
+        <li>Australian-based events from 2016 onwards</li>
+        <li>Events of interest to the software development community (technical, leadership, agile, AI, etc.)</li>
+        <li>In-person and virtual events; free and paid</li>
+      </ul>
+
+      <h2 style="font-size:1.2rem; margin-top:2rem;">How to contribute</h2>
+      <p>
+        The simplest way is to use the GitHub editor:
+      </p>
+      <ol>
+        <li>Open <a href="https://github.com/vatsalyagoel/DevEvents/edit/main/README.md" target="_blank" rel="noopener noreferrer">README.md on GitHub</a></li>
+        <li>Add your event to the table in chronological order</li>
+        <li>Submit a pull request</li>
+      </ol>
+      <p>
+        See the full <a href="https://github.com/vatsalyagoel/DevEvents/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">contribution guide</a> for formatting rules and date format requirements.
+      </p>
+
+      <h2 style="font-size:1.2rem; margin-top:2rem;">License</h2>
+      <p>
+        All data is released under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">Creative Commons CC0</a> — you are free to use it for any purpose.
+      </p>
+
+      <p style="margin-top:2rem;">
+        <a href="https://github.com/vatsalyagoel/DevEvents" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+      </p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,54 @@
+---
+import type { Event } from '@data/types';
+import { formatDate } from '@data/parse-date';
+
+interface Props {
+  events: Event[];
+}
+
+const { events } = Astro.props;
+---
+
+{events.length === 0 ? (
+  <p class="empty-state">No events found.</p>
+) : (
+  <div class="data-table__wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>State</th>
+          <th>Date</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        {events.map((e) => {
+          const dateStr = e.dateFrom
+            ? e.dateTo && e.dateFrom.toDateString() !== e.dateTo.toDateString()
+              ? `${formatDate(e.dateFrom)} – ${formatDate(e.dateTo!)}`
+              : formatDate(e.dateFrom)
+            : e.dateFromRaw || 'TBC';
+
+          return (
+            <tr>
+              <td>
+                {e.url
+                  ? <a href={e.url} target="_blank" rel="noopener noreferrer">{e.name}</a>
+                  : e.name
+                }
+              </td>
+              <td><span class="state-pill" data-state={e.state}>{e.state === 'VIRTUAL' ? 'Virtual' : e.state}</span></td>
+              <td style="white-space: nowrap">{dateStr}</td>
+              <td>
+                <div style="display:flex;flex-wrap:wrap;gap:0.3rem">
+                  {e.tags.map((tag) => <span class="tag-chip">{tag}</span>)}
+                </div>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+)}

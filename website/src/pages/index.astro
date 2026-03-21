@@ -1,0 +1,100 @@
+---
+import Base from '@layouts/Base.astro';
+import UpcomingEventsIsland from '@components/UpcomingEventsIsland';
+import { parseUpcomingEvents } from '@data/parse-events';
+import { getAvailableStates, parseMeetupsByState } from '@data/parse-meetups';
+
+const allUpcoming = parseUpcomingEvents();
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const upcoming = allUpcoming.filter((e) => {
+  const end = e.dateTo ?? e.dateFrom;
+  if (!end) return true;
+  return end >= today;
+});
+
+const states = getAvailableStates();
+const meetupCounts = states.map((s) => ({
+  state: s,
+  count: parseMeetupsByState(s).filter((m) => !m.stale).length,
+})).filter(({ count }) => count > 0);
+---
+
+<Base
+  title="DevEvents"
+  description="A community-maintained list of Australian developer events and meetups."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__title">
+        Australian<br/><span>Developer Events</span>
+      </h1>
+      <p class="hero__sub">
+        A community-maintained, open-source list of conferences, workshops, and meetups for software developers in Australia.
+      </p>
+      <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+        <a href="/events" style="padding:0.65rem 1.5rem; background:var(--color-accent); color:#fff; border-radius:var(--radius); font-weight:600; font-size:0.95rem;">
+          Browse Events
+        </a>
+        <a href="https://github.com/vatsalyagoel/DevEvents/edit/main/README.md" target="_blank" rel="noopener noreferrer"
+           style="padding:0.65rem 1.5rem; border:1.5px solid var(--color-border); border-radius:var(--radius); font-weight:600; font-size:0.95rem; color:var(--color-text);">
+          Add an Event
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming events -->
+  <section style="padding-bottom: 3rem;">
+    <div class="container">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.25rem;">
+        <h2 class="section-heading" style="margin:0">Upcoming Events</h2>
+        <a href="/events" style="font-size:0.9rem;">View all &rarr;</a>
+      </div>
+
+      <UpcomingEventsIsland events={upcoming} client:load />
+    </div>
+  </section>
+
+  <!-- Meetups teaser -->
+  {meetupCounts.length > 0 && (
+    <section style="background:var(--color-surface); border-top:1px solid var(--color-border); border-bottom:1px solid var(--color-border); padding:2.5rem 0;">
+      <div class="container">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.25rem;">
+          <h2 class="section-heading" style="margin:0">Regular Meetups</h2>
+          <a href="/meetups" style="font-size:0.9rem;">All meetups &rarr;</a>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+          {meetupCounts.map(({ state, count }) => (
+            <a
+              href={`/meetups/${state.toLowerCase()}`}
+              style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 0.9rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--radius); font-size:0.88rem; color:var(--color-text);"
+            >
+              <span class="state-pill" data-state={state}>{state}</span>
+              {count} meetup{count !== 1 ? 's' : ''}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Contribute CTA -->
+  <section style="padding: 3.5rem 0;">
+    <div class="container" style="text-align:center;">
+      <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:0.75rem;">Know of an event we missed?</h2>
+      <p style="color:var(--color-text-muted); margin-bottom:1.5rem; max-width:480px; margin-left:auto; margin-right:auto;">
+        This list is maintained by the community. You can add or update events directly on GitHub — no coding required.
+      </p>
+      <a
+        href="https://github.com/vatsalyagoel/DevEvents"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="padding:0.65rem 1.5rem; background:var(--color-accent); color:#fff; border-radius:var(--radius); font-weight:600;"
+      >
+        Contribute on GitHub
+      </a>
+    </div>
+  </section>
+</Base>

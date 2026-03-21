@@ -1,0 +1,59 @@
+---
+import Base from '@layouts/Base.astro';
+import { getAvailableStates, parseMeetupsByState } from '@data/parse-meetups';
+import type { StateCode } from '@data/types';
+
+const STATE_NAMES: Record<StateCode, string> = {
+  ACT: 'Australian Capital Territory',
+  NSW: 'New South Wales',
+  NT: 'Northern Territory',
+  QLD: 'Queensland',
+  SA: 'South Australia',
+  TAS: 'Tasmania',
+  VIC: 'Victoria',
+  WA: 'Western Australia',
+  ALL: 'All States',
+  OTH: 'Other',
+  VIRTUAL: 'Virtual',
+};
+
+const states = getAvailableStates();
+const stateData = states.map((state) => {
+  const meetups = parseMeetupsByState(state);
+  const active = meetups.filter((m) => !m.stale);
+  return { state, name: STATE_NAMES[state] ?? state, count: active.length };
+});
+---
+
+<Base
+  title="Meetups"
+  description="Regular developer meetups across Australian states and territories."
+>
+  <div class="container">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <span>Meetups</span>
+      </div>
+      <h1>Meetups</h1>
+      <p style="color: var(--color-text-muted); margin: 0.5rem 0 0;">
+        Regular developer meetups by state. Want to add one?
+        <a href="https://github.com/vatsalyagoel/DevEvents" target="_blank" rel="noopener noreferrer">Contribute on GitHub &rarr;</a>
+      </p>
+    </div>
+    <div class="page-content">
+      <div class="state-grid">
+        {stateData.map(({ state, name, count }) => (
+          <a href={`/meetups/${state.toLowerCase()}`} class="state-card">
+            <div class="state-card__name">
+              <span class="state-pill" data-state={state}>{state}</span>
+              &nbsp;{name}
+            </div>
+            <div class="state-card__count">
+              {count > 0 ? `${count} active meetup${count !== 1 ? 's' : ''}` : 'No meetups listed'}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

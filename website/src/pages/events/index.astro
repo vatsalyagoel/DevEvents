@@ -1,0 +1,61 @@
+---
+import Base from '@layouts/Base.astro';
+import FilterIsland from '@components/FilterIsland';
+import { parseUpcomingEvents } from '@data/parse-events';
+
+const allUpcoming = parseUpcomingEvents();
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const upcoming = allUpcoming.filter((e) => {
+  const end = e.dateTo ?? e.dateFrom;
+  if (!end) return true;
+  return end >= today;
+});
+---
+
+<Base
+  title="Upcoming Events"
+  description={`${upcoming.length} upcoming Australian developer events. Filter by state, topic, and CFP status.`}
+>
+  <div class="container">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <span>Events</span>
+      </div>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">
+        <div>
+          <h1 style="margin:0">Upcoming Events</h1>
+          <p style="color: var(--color-text-muted); margin: 0.4rem 0 0;">
+            <a href="/events/past">Browse past events &rarr;</a>
+          </p>
+        </div>
+        <a
+          href="https://github.com/vatsalyagoel/DevEvents/edit/main/README.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-size:0.83rem; color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius); padding:0.3rem 0.75rem; white-space:nowrap;"
+        >
+          Edit on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="page-content">
+      {upcoming.length === 0 ? (
+        <div class="empty-state">
+          <p>No upcoming events listed yet.</p>
+          <p>
+            <a
+              href="https://github.com/vatsalyagoel/DevEvents/edit/main/README.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Add the first one &rarr;
+            </a>
+          </p>
+        </div>
+      ) : (
+        <FilterIsland events={upcoming} client:load />
+      )}
+    </div>
+  </div>
+</Base>

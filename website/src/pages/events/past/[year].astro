@@ -1,0 +1,78 @@
+---
+import Base from '@layouts/Base.astro';
+import EventTable from '@components/EventTable.astro';
+import { getAvailableYears, parsePastEvents } from '@data/parse-events';
+
+export async function getStaticPaths() {
+  const years = getAvailableYears();
+  return years.map((year) => ({
+    params: { year: String(year) },
+    props: { year, events: parsePastEvents(year) },
+  }));
+}
+
+interface Props {
+  year: number;
+  events: Awaited<ReturnType<typeof parsePastEvents>>;
+}
+
+const { year } = Astro.props;
+let { events } = Astro.props;
+const allYears = getAvailableYears();
+const currentYear = new Date().getFullYear();
+if (year === currentYear) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  events = events.filter((e) => {
+    const end = e.dateTo ?? e.dateFrom;
+    return end !== null && end < today;
+  });
+}
+const currentIndex = allYears.indexOf(year);
+const prevYear = allYears[currentIndex + 1];
+const nextYear = allYears[currentIndex - 1];
+const editUrl = year === currentYear
+  ? 'https://github.com/vatsalyagoel/DevEvents/edit/main/README.md'
+  : `https://github.com/vatsalyagoel/DevEvents/edit/main/Past%20Events/${year}.md`;
+---
+
+<Base
+  title={`${year} Events`}
+  description={`Australian developer events in ${year}. ${events.length} events listed.`}
+>
+  <div class="container">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="/events">Events</a>
+        <span class="breadcrumb__sep">/</span>
+        <a href="/events/past">Past Events</a>
+        <span class="breadcrumb__sep">/</span>
+        <span>{year}</span>
+      </div>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">
+        <div>
+          <h1 style="margin:0">{year} Events</h1>
+          <p style="color: var(--color-text-muted); margin: 0.4rem 0 0;">
+            {events.length} event{events.length !== 1 ? 's' : ''} listed
+          </p>
+        </div>
+        <a
+          href={editUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-size:0.83rem; color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius); padding:0.3rem 0.75rem; white-space:nowrap;"
+        >
+          Edit on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="page-content">
+      <EventTable events={events} />
+
+      <div style="display:flex; gap:1rem; margin-top:2rem; font-size:0.9rem; flex-wrap:wrap;">
+        {prevYear && <a href={`/events/past/${prevYear}`}>&larr; {prevYear}</a>}
+        {nextYear && <a href={`/events/past/${nextYear}`}>{nextYear} &rarr;</a>}
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,24 @@
+{
+  "name": "devevents-website",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^5.0.2",
+    "@astrojs/sitemap": "^3.7.1",
+    "astro": "^6.0.8",
+    "mdast-util-to-string": "^4.0.0",
+    "preact": "^10.24.0",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "typescript": "^5.5.0"
+  }
+}

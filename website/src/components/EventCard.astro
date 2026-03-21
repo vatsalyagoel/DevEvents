@@ -1,0 +1,54 @@
+---
+import type { Event } from '@data/types';
+import { formatDate } from '@data/parse-date';
+
+interface Props {
+  event: Event;
+}
+
+const { event } = Astro.props;
+
+const now = new Date();
+const cfpOpen = event.cfpOpen && event.cfpClose
+  ? now >= event.cfpOpen && now <= event.cfpClose
+  : null;
+const cfpClosed = event.cfpClose && now > event.cfpClose;
+
+const dateStr = event.dateFrom
+  ? event.dateTo && event.dateFrom.toDateString() !== event.dateTo.toDateString()
+    ? `${formatDate(event.dateFrom)} – ${formatDate(event.dateTo!)}`
+    : formatDate(event.dateFrom)
+  : event.dateFromRaw || 'TBC';
+---
+
+<article class="event-card">
+  <div class="event-card__header">
+    <span class="state-pill" data-state={event.state}>{event.state === 'VIRTUAL' ? 'Virtual' : event.state}</span>
+    {event.tags.slice(0, 3).map((tag) => (
+      <span class="tag-chip">{tag}</span>
+    ))}
+  </div>
+  <div class="event-card__name">
+    {event.url
+      ? <a href={event.url} target="_blank" rel="noopener noreferrer">{event.name}</a>
+      : event.name
+    }
+  </div>
+  <div class="event-card__date">{dateStr}</div>
+  {(event.cfpOpenRaw || event.cfpCloseRaw) && (
+    <div class="event-card__cfp">
+      {cfpOpen === true && (
+        <span class="cfp-open">CFP open</span>
+      )}
+      {cfpOpen === false && cfpClosed && (
+        <span class="cfp-closed">CFP closed</span>
+      )}
+      {cfpOpen === null && (event.cfpOpenRaw || event.cfpCloseRaw) && (
+        <span>CFP: {[event.cfpOpenRaw, event.cfpCloseRaw].filter(Boolean).join(' – ')}</span>
+      )}
+      {cfpOpen === false && !cfpClosed && event.cfpCloseRaw && (
+        <span>CFP closes {event.cfpCloseRaw}</span>
+      )}
+    </div>
+  )}
+</article>

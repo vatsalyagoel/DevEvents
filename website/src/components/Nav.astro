@@ -1,0 +1,48 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const links = [
+  { href: '/events', label: 'Events' },
+  { href: '/meetups', label: 'Meetups' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href="/" class="nav__logo">DevEvents</a>
+    <ul class="nav__links">
+      {links.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class={currentPath.startsWith(href) ? 'active' : ''}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a
+      href="https://github.com/vatsalyagoel/DevEvents/edit/main/README.md"
+      class="nav__cta"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Add Event
+    </a>
+    <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()"></button>
+  </div>
+</nav>
+
+<script is:inline>
+  function toggleTheme() {
+    var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  }
+</script>

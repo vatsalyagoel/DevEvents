@@ -1,0 +1,27 @@
+---
+import Base from '@layouts/Base.astro';
+import { getAvailableYears } from '@data/parse-events';
+
+const years = getAvailableYears();
+---
+
+<Base title="Past Events" description="Archive of Australian developer events from 2016 to present.">
+  <div class="container">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="/events">Events</a>
+        <span class="breadcrumb__sep">/</span>
+        <span>Past Events</span>
+      </div>
+      <h1>Past Events</h1>
+      <p style="color: var(--color-text-muted); margin: 0.5rem 0 0;">Australian developer events archived by year.</p>
+    </div>
+    <div class="page-content">
+      <div class="year-grid">
+        {years.map((year) => (
+          <a href={`/events/past/${year}`} class="year-card">{year}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

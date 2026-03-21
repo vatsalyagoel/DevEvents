@@ -1,0 +1,140 @@
+---
+import Base from '@layouts/Base.astro';
+import { getAvailableStates, parseMeetupsByState } from '@data/parse-meetups';
+import type { StateCode } from '@data/types';
+
+export async function getStaticPaths() {
+  const states = getAvailableStates();
+  return states.map((state) => ({
+    params: { state: state.toLowerCase() },
+    props: { state, meetups: parseMeetupsByState(state) },
+  }));
+}
+
+interface Props {
+  state: StateCode;
+  meetups: Awaited<ReturnType<typeof parseMeetupsByState>>;
+}
+
+const STATE_NAMES: Record<StateCode, string> = {
+  ACT: 'Australian Capital Territory',
+  NSW: 'New South Wales',
+  NT: 'Northern Territory',
+  QLD: 'Queensland',
+  SA: 'South Australia',
+  TAS: 'Tasmania',
+  VIC: 'Victoria',
+  WA: 'Western Australia',
+  ALL: 'All States',
+  OTH: 'Other',
+  VIRTUAL: 'Virtual',
+};
+
+const { state, meetups } = Astro.props;
+const active = meetups.filter((m) => !m.stale);
+const stale = meetups.filter((m) => m.stale);
+const stateName = STATE_NAMES[state] ?? state;
+const editUrl = `https://github.com/vatsalyagoel/DevEvents/edit/main/Meetups/${state}.md`;
+---
+
+<Base
+  title={`${state} Meetups`}
+  description={`Developer meetups in ${stateName}. ${active.length} active meetup${active.length !== 1 ? 's' : ''} listed.`}
+>
+  <div class="container">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="/meetups">Meetups</a>
+        <span class="breadcrumb__sep">/</span>
+        <span>{state}</span>
+      </div>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">
+        <h1 style="margin:0">
+          <span class="state-pill" data-state={state} style="font-size:0.75rem;vertical-align:middle">{state}</span>
+          &nbsp;{stateName} Meetups
+        </h1>
+        <a
+          href={editUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-size:0.83rem; color:var(--color-text-muted); border:1px solid var(--color-border); border-radius:var(--radius); padding:0.3rem 0.75rem; white-space:nowrap;"
+        >
+          Edit on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="page-content">
+      {active.length === 0 ? (
+        <div class="empty-state">
+          <p>No meetups currently listed for {stateName}.</p>
+          <p>
+            <a href={editUrl} target="_blank" rel="noopener noreferrer">
+              Add one on GitHub &rarr;
+            </a>
+          </p>
+        </div>
+      ) : (
+        <div class="data-table__wrap" style="margin-bottom: 2rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Meetup</th>
+                <th>Location</th>
+                <th>Host</th>
+                <th>Frequency</th>
+                <th>Tags</th>
+              </tr>
+            </thead>
+            <tbody>
+              {active.map((m) => (
+                <tr>
+                  <td>
+                    {m.url
+                      ? <a href={m.url} target="_blank" rel="noopener noreferrer">{m.name}</a>
+                      : m.name
+                    }
+                  </td>
+                  <td>{m.location}</td>
+                  <td>{m.host}</td>
+                  <td>{m.frequency}</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.3rem">
+                      {m.tags.map((t) => <span class="tag-chip">{t}</span>)}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {stale.length > 0 && (
+        <details>
+          <summary style="cursor:pointer; color: var(--color-text-muted); font-size:0.9rem; margin-bottom:1rem;">
+            {stale.length} stale meetup{stale.length !== 1 ? 's' : ''} (no longer running)
+          </summary>
+          <div class="data-table__wrap" style="margin-top:0.75rem;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Meetup</th></tr>
+              </thead>
+              <tbody>
+                {stale.map((m) => (
+                  <tr>
+                    <td>
+                      {m.url
+                        ? <a href={m.url} target="_blank" rel="noopener noreferrer">{m.name}</a>
+                        : m.name
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      )}
+    </div>
+  </div>
+</Base>
