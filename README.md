@@ -10,6 +10,7 @@ We've collated a list of all the events in Australia that might be of interest t
 | [Programmable Melbourne 2026](https://www.programmable.tech/) | Melbourne | 17-Mar-2026 | | | 2-Dec-2025 | Various |
 | [Programmable Sydney 2026](https://www.programmable.tech/) | Sydney | 19-Mar-2026 | | | 2-Dec-2025 | Various |
 | [NDC Sydney 2026](https://ndcsydney.com/) | Sydney | 22-Apr-2026 | 24-Apr-2026 | | 6-Dec-2025 | Various |
+| [AI Engineer Melbourne](https://webdirections.org/ai-engineer/index.php) | Melbourne | 3-Jun-2026 | 4-Jun-2026 | | 28-Feb-2026 | Various |
 
 ## Prior Years
 
